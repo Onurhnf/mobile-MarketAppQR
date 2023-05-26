@@ -35,7 +35,7 @@ const LoginScreen: React.FC = ({ navigation }: any) => {
       dispatch(setUserData(result.data.data.user));
 
       toast.show({
-        description: `Wellcome ${result.data.data.user.name}! Successfully registered!`,
+        description: `Wellcome ${result.data.data.user.name}!`,
         backgroundColor: "success.400",
         borderRadius: "2xl",
         placement: "top",
@@ -82,7 +82,7 @@ const LoginScreen: React.FC = ({ navigation }: any) => {
           fontWeight="medium"
           size="xs"
         >
-          Sign in to continue!
+          Login to continue!
         </Heading>
 
         <VStack space={3} mt="5">
@@ -132,7 +132,7 @@ const LoginScreen: React.FC = ({ navigation }: any) => {
               Forget Password?
             </Link>
           </FormControl>
-          <Button mt="2" onPress={handleLogin}>
+          <Button mt="2" colorScheme="cyan" onPress={handleLogin}>
             Login
           </Button>
           <HStack mt="6" space={2} justifyContent="center">

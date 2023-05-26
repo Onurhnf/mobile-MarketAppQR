@@ -7,7 +7,9 @@ const MarketService = {
     id: string,
     token: string
   ): Promise<{ data: IMarket.IMarketResponse }> => {
-    const result = await Http.GET(Endpoints.GetMarket + id, null, {
+    const endpoint = Endpoints.GetMarket.replace(":id", id);
+
+    const result = await Http.GET(endpoint, null, {
       Authorization: `Bearer ${token}`,
     });
     return result;

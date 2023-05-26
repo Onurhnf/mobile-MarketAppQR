@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, Button } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { BarCodeScanner, BarCodeScannedCallback } from "expo-barcode-scanner";
-import { Center } from "native-base";
-import { useDispatch } from "react-redux";
+import { Center, Text } from "native-base";
+import { useDispatch, useSelector } from "react-redux";
 import { setMarketId } from "../../store/MarketSlice";
+import { AppDispatch, RootState } from "../../store/Store";
+import { getProduct } from "../../store/ProductSlice";
 
 export default function Scanner({ route, navigation }: any) {
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [scanned, setScanned] = useState<boolean>(false);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
+  const { isMarketFound } = useSelector((state: RootState) => state.market);
+  const { token } = useSelector((state: RootState) => state.user);
+
+  const handleAddItemToCart = (productId: string) => {
+    dispatch(getProduct({ productId, token }));
+  };
 
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {
@@ -21,21 +29,21 @@ export default function Scanner({ route, navigation }: any) {
 
   const handleBarCodeScanned: BarCodeScannedCallback = ({ type, data }) => {
     setScanned(true);
-    dispatch(setMarketId(data));
+    !isMarketFound ? dispatch(setMarketId(data)) : handleAddItemToCart(data);
     navigation.goBack();
   };
 
   if (hasPermission === null) {
     return (
       <Center>
-        <Text>Requesting for camera permission</Text>
+        <Text fontSize="lg">Requesting for camera permission</Text>
       </Center>
     );
   }
   if (hasPermission === false) {
     return (
       <Center>
-        <Text>No access to camera</Text>
+        <Text fontSize="lg">No access to camera</Text>
       </Center>
     );
   }
@@ -46,9 +54,6 @@ export default function Scanner({ route, navigation }: any) {
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
       />
-      {scanned && (
-        <Button title={"Tap to Scan Again"} onPress={() => setScanned(false)} />
-      )}
     </View>
   );
 }

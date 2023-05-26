@@ -1,5 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+interface UserState {
+  data: string | null;
+  token: string | null;
+  isLoggedIn: boolean;
+}
+
+const initialState: UserState = {
+  data: null,
+  token: null,
+  isLoggedIn: false,
+};
+
 export const UserSlice = createSlice({
   name: "user",
   initialState: {

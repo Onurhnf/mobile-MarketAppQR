@@ -183,7 +183,7 @@ const SignUpScreen: React.FC = () => {
                   }
                 />
               </FormControl>
-              <Button mt="2" colorScheme="primary" onPress={handleSignUp}>
+              <Button mt="2" colorScheme="cyan" onPress={handleSignUp}>
                 Sign up
               </Button>
             </VStack>

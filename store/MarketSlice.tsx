@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export const MarketSlice = createSlice({
-  name: "user",
+  name: "market",
   initialState: {
     marketID: null,
     isMarketFound: false,
@@ -15,7 +15,7 @@ export const MarketSlice = createSlice({
       state.isMarketFound = true;
       state.marketData = action.payload;
     },
-    forgetMarket: (state, action) => {
+    forgetMarket: (state) => {
       state.marketID = null;
       state.isMarketFound = false;
     },

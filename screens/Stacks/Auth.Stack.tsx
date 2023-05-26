@@ -1,3 +1,4 @@
+import { useTheme } from "native-base";
 import LoginScreen from "../Auth/Login.screen";
 import SignUpScreen from "../Auth/SignUp.screen";
 import {
@@ -7,11 +8,13 @@ import {
 
 export default function AuthStack() {
   const Stack = createStackNavigator();
+  const theme = useTheme();
 
   return (
     <Stack.Navigator
       screenOptions={{
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        headerStyle: { backgroundColor: theme.colors.cyan[600] },
       }}
     >
       <Stack.Screen
