@@ -17,6 +17,7 @@ import { IError } from "../../interfaces/Error/IError.interface";
 import { IAuth } from "../../interfaces/Auth/IAuth.interface";
 import { useDispatch } from "react-redux";
 import { login, setUserData } from "../../store/UserSlice";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const SignUpScreen: React.FC = () => {
   const dispatch = useDispatch();
@@ -39,7 +40,7 @@ const SignUpScreen: React.FC = () => {
 
       toast.show({
         description: `Wellcome ${result.data.data.user.name}! Successfully registered!`,
-        backgroundColor: "success.400",
+        backgroundColor: "success.500",
         borderRadius: "2xl",
         placement: "top",
       });
@@ -183,7 +184,18 @@ const SignUpScreen: React.FC = () => {
                   }
                 />
               </FormControl>
-              <Button mt="2" colorScheme="cyan" onPress={handleSignUp}>
+              <Button
+                endIcon={
+                  <MaterialCommunityIcons
+                    name="draw-pen"
+                    size={24}
+                    color="white"
+                  />
+                }
+                mt="2"
+                colorScheme="cyan"
+                onPress={handleSignUp}
+              >
                 Sign up
               </Button>
             </VStack>

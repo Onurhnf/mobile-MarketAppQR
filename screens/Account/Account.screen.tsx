@@ -1,61 +1,112 @@
-import {
-  Box,
-  Text,
-  Center,
-  HStack,
-  Heading,
-  VStack,
-  Button,
-  View,
-  ScrollView,
-  useToast,
-  useTheme,
-} from "native-base";
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { RootState } from "../../store/Store";
-import MarketService from "../../services/Market.service";
-import { IError } from "../../interfaces/Error/IError.interface";
-import { marketFaund, setMarketId } from "../../store/MarketSlice";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Box, Pressable, useColorModeValue } from "native-base";
+import { TabView } from "react-native-tab-view";
+import { Animated, Dimensions, StatusBar } from "react-native";
+import UserDetailsScreen from "../../components/Account/AccountDetail.component";
+import ChangePasswordScreen from "../../components/Account/ChangePassword.component";
+
+type Route = {
+  key: string;
+  title: string;
+};
+
+type RenderSceneProps = {
+  route: Route;
+};
 
 export default function AccountScreen({ navigation }: any) {
-  const dispatch = useDispatch();
-  const theme = useTheme();
-  const toast = useToast();
-  const { token } = useSelector((state: RootState) => state.user);
-  const { isMarketFound, marketID } = useSelector(
-    (state: RootState) => state.market
-  );
+  const user = useSelector((state: RootState) => state.user.data);
+
+  const [index, setIndex] = useState<number>(0);
+  const [routes] = useState<Route[]>([
+    { key: "userDetails", title: "User Details" },
+    { key: "changePassword", title: "Change Password" },
+    { key: "history", title: "Shopping History" },
+  ]);
+
+  const initialLayout = {
+    width: Dimensions.get("window").width,
+  };
+
+  const renderScene = ({ route }: RenderSceneProps) => {
+    switch (route.key) {
+      case "userDetails":
+        return <UserDetailsScreen user={user} />;
+      case "changePassword":
+        return <ChangePasswordScreen navigation={navigation} />;
+      case "history":
+        return <ChangePasswordScreen navigation={navigation} />;
+      default:
+        return null;
+    }
+  };
+
+  const renderTabBar = (props: any) => {
+    const inputRange = props.navigationState.routes.map(
+      (x: Route, i: number) => i
+    );
+    return (
+      <Box flexDirection="row">
+        {props.navigationState.routes.map((route: Route, i: number) => {
+          const opacity = props.position.interpolate({
+            inputRange,
+            outputRange: inputRange.map((inputIndex: number) =>
+              inputIndex === i ? 1 : 0.5
+            ),
+          });
+          const color =
+            index === i
+              ? useColorModeValue("#000", "#e5e5e5")
+              : useColorModeValue("#1f2937", "#a1a1aa");
+          const borderColor =
+            index === i
+              ? "cyan.600"
+              : useColorModeValue("coolGray.200", "gray.400");
+          return (
+            <Box
+              borderBottomWidth="5"
+              borderColor={borderColor}
+              flex={1}
+              alignItems="center"
+              py="3"
+              key={route.key}
+            >
+              <Pressable
+                onPress={() => {
+                  console.log(i);
+                  setIndex(i);
+                }}
+              >
+                <Animated.Text
+                  style={{
+                    color,
+                  }}
+                >
+                  {route.title}
+                </Animated.Text>
+              </Pressable>
+            </Box>
+          );
+        })}
+      </Box>
+    );
+  };
 
   return (
-    <Center
-      _dark={{ bg: "blueGray.800" }}
-      _light={{ bg: "blueGray.100" }}
-      px={4}
-      flex={1}
-    >
-      <VStack space={5} alignItems="center">
-        <Heading size="lg">Welcome to NativeBase</Heading>
-        <HStack space={2} alignItems="center">
-          <Text>Edit</Text>
-          <Box
-            _web={{
-              _text: {
-                fontFamily: "monospace",
-                fontSize: "sm",
-              },
-            }}
-            px={2}
-            py={1}
-            _dark={{ bg: "blueGray.800" }}
-            _light={{ bg: "blueGray.200" }}
-          >
-            App.js
-          </Box>
-          <Text>and save to reload.</Text>
-        </HStack>
-      </VStack>
-    </Center>
+    <TabView
+      navigationState={{
+        index,
+        routes,
+      }}
+      renderScene={renderScene}
+      renderTabBar={renderTabBar}
+      onIndexChange={setIndex}
+      initialLayout={initialLayout}
+      style={{
+        marginTop: StatusBar.currentHeight,
+      }}
+    />
   );
 }

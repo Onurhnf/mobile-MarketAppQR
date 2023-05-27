@@ -1,6 +1,5 @@
 import { Endpoints } from "../enums/api/Endpoints";
 import { ICart } from "../interfaces/Cart/ICart.interface";
-import { IMarket } from "../interfaces/Market/IMarket.interface";
 import Http from "../utils/Http";
 
 const CartService = {
@@ -23,7 +22,7 @@ const CartService = {
   PurchaseCart: async (
     cartId: string,
     token: string
-  ): Promise<{ data: IMarket.IMarketResponse }> => {
+  ): Promise<{ data: ICart.ICartBuyOrDrop }> => {
     const endpoint = Endpoints.PurchaseCart.replace(":cartId", cartId);
 
     const result = await Http.POST(endpoint, null, {
@@ -34,7 +33,7 @@ const CartService = {
   DeclineCart: async (
     cartId: string,
     token: string
-  ): Promise<{ data: IMarket.IMarketResponse }> => {
+  ): Promise<{ data: ICart.ICartBuyOrDrop }> => {
     const endpoint = Endpoints.DeclineCart.replace(":cartId", cartId);
 
     const result = await Http.POST(endpoint, null, {
@@ -73,7 +72,7 @@ const CartService = {
   },
   GetCartHistory: async (
     token: string
-  ): Promise<{ data: IMarket.IMarketResponse }> => {
+  ): Promise<{ data: ICart.IHistoryResponse }> => {
     const result = await Http.GET(Endpoints.GetCartHistory, null, {
       Authorization: `Bearer ${token}`,
     });

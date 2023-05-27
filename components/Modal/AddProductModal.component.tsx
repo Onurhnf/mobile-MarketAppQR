@@ -71,7 +71,7 @@ export default function AddProductModal() {
 
       toast.show({
         description: `Successfully added!`,
-        backgroundColor: "success.400",
+        backgroundColor: "success.500",
         borderRadius: "2xl",
         placement: "top",
       });

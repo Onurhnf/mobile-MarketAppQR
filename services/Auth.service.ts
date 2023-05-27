@@ -15,6 +15,20 @@ const AuthService = {
     const result = await Http.POST(Endpoints.SignUp, formData);
     return result;
   },
+  UpdateCurrentUserPassword: async (
+    formData: IAuth.IUpdateMyPassword,
+    token: string
+  ): Promise<{ data: IAuth.IAuthResponse }> => {
+    const result = await Http.PATCH(
+      Endpoints.UpdateCurrentUserPassowrd,
+      { ...formData },
+
+      {
+        Authorization: `Bearer ${token}`,
+      }
+    );
+    return result;
+  },
 };
 
 export default AuthService;

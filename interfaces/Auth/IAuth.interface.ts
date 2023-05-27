@@ -30,4 +30,9 @@ export namespace IAuth {
     passwordConfirm: string;
     name: string;
   }
+  export interface IUpdateMyPassword {
+    passwordCurrent: string;
+    password: string;
+    passwordConfirm: string;
+  }
 }

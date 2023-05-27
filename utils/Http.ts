@@ -36,14 +36,14 @@ const Http = {
    * @param headers
    * @returns Promise
    */
-  PUT: async (
+  PATCH: async (
     url: string,
     data?: any,
-    headers?: AxiosHeaders
+    headers?: RawAxiosRequestHeaders
   ): Promise<any> => {
     const result = await axios({
       url: url,
-      method: "put",
+      method: "patch",
       data: data,
       headers: {
         ...headers,

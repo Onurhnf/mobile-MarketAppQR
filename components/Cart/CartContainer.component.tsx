@@ -20,7 +20,7 @@ import { RootState } from "../../store/Store";
 import CartService from "../../services/Cart.service";
 import { IError } from "../../interfaces/Error/IError.interface";
 
-export default function CartContainer() {
+export default function CartContainer({ totalCost }: any) {
   const toast = useToast();
   const { cartData, cartId } = useSelector((state: RootState) => state.cart);
   const { token } = useSelector((state: RootState) => state.user);
@@ -127,16 +127,18 @@ export default function CartContainer() {
               </VStack>
               <Spacer />
               <VStack flex={1} space="1">
-                <Text
-                  fontSize="sm"
-                  color="coolGray.800"
-                  _dark={{
-                    color: "warmGray.50",
-                  }}
-                  alignSelf="flex-start"
-                >
-                  ${item.price}
-                </Text>
+                {item.quantity <= 1 && (
+                  <Text
+                    fontSize="sm"
+                    color="coolGray.800"
+                    _dark={{
+                      color: "warmGray.50",
+                    }}
+                    alignSelf="flex-start"
+                  >
+                    ${item.price}
+                  </Text>
+                )}
                 {item.quantity > 1 && (
                   <Text
                     fontSize="sm"
@@ -147,7 +149,7 @@ export default function CartContainer() {
                     }}
                     alignSelf="flex-start"
                   >
-                    Total: ${item.price * item.quantity}
+                    Sum: ${item.price * item.quantity}
                   </Text>
                 )}
               </VStack>
@@ -197,9 +199,18 @@ export default function CartContainer() {
         w="100%"
         borderRadius={25}
       >
-        <Heading color="dark.200" p="4" pb="3" size="lg">
-          Cart
-        </Heading>
+        <HStack justifyContent="space-between">
+          <Heading color="dark.200" p="4" pb="3" size="lg">
+            Cart
+          </Heading>
+          {totalCost ? (
+            <Heading color="green.200" p="4" pb="3" size="md">
+              Total: <Text fontSize="2xl">${totalCost.toLocaleString()}</Text>
+            </Heading>
+          ) : (
+            <></>
+          )}
+        </HStack>
 
         <Box bg="white" flex="1">
           <SwipeListView
@@ -210,7 +221,7 @@ export default function CartContainer() {
             renderHiddenItem={renderHiddenItem}
             rightOpenValue={-70}
             previewRowKey="0"
-            previewOpenValue={-50}
+            previewOpenValue={-70}
             previewOpenDelay={1000}
             onRowDidOpen={onRowDidOpen}
           />

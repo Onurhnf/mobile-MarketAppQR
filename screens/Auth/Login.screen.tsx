@@ -17,6 +17,7 @@ import { IError } from "../../interfaces/Error/IError.interface";
 import { IAuth } from "../../interfaces/Auth/IAuth.interface";
 import { useDispatch } from "react-redux";
 import { login, setUserData } from "../../store/UserSlice";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const LoginScreen: React.FC = ({ navigation }: any) => {
   const toast = useToast();
@@ -27,8 +28,6 @@ const LoginScreen: React.FC = ({ navigation }: any) => {
   });
 
   const handleLogin = async () => {
-    // Add your login logic here
-
     try {
       const result = await AuthService.Login(credentials);
       dispatch(login(result.data.token));
@@ -36,7 +35,7 @@ const LoginScreen: React.FC = ({ navigation }: any) => {
 
       toast.show({
         description: `Wellcome ${result.data.data.user.name}!`,
-        backgroundColor: "success.400",
+        backgroundColor: "success.500",
         borderRadius: "2xl",
         placement: "top",
       });
@@ -98,9 +97,10 @@ const LoginScreen: React.FC = ({ navigation }: any) => {
               placeholder="example@mail.com"
               autoCapitalize="none"
               value={credentials.email}
-              onChangeText={(text) =>
-                setCredentials({ ...credentials, email: text })
-              }
+              onChangeText={(text) => {
+                const trimmedText = text.trim();
+                setCredentials({ ...credentials, email: trimmedText });
+              }}
             />
           </FormControl>
           <FormControl>
@@ -132,7 +132,14 @@ const LoginScreen: React.FC = ({ navigation }: any) => {
               Forget Password?
             </Link>
           </FormControl>
-          <Button mt="2" colorScheme="cyan" onPress={handleLogin}>
+          <Button
+            endIcon={
+              <MaterialCommunityIcons name="login" size={24} color="white" />
+            }
+            mt="2"
+            colorScheme="cyan"
+            onPress={handleLogin}
+          >
             Login
           </Button>
           <HStack mt="6" space={2} justifyContent="center">

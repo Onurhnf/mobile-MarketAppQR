@@ -56,7 +56,6 @@ export const ProductSlice = createSlice({
       }
     );
     builder.addCase(getProduct.rejected, (state, action) => {
-      console.log("mahmut", (action.payload as any).response?.data.message);
       state.productError =
         (action.payload as any)?.response?.data?.message ??
         "Something went wrong!";

@@ -36,7 +36,7 @@ export default function Home({ navigation }: any) {
 
       toast.show({
         description: `Success! Welcome to ${result.data.data.name}`,
-        backgroundColor: "success.400",
+        backgroundColor: "success.500",
         borderRadius: "2xl",
         placement: "top",
       });
@@ -65,7 +65,7 @@ export default function Home({ navigation }: any) {
 
       toast.show({
         description: `Your cart has been created!`,
-        backgroundColor: "success.400",
+        backgroundColor: "success.500",
         borderRadius: "2xl",
         placement: "top",
       });

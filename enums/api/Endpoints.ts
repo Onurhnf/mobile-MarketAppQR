@@ -6,6 +6,7 @@ export const Endpoints = {
    */
   Login: api("/users/login"),
   SignUp: api("/users/signup"),
+  UpdateCurrentUserPassowrd: api("/users/updateMyPassword"),
 
   /**
    * Market

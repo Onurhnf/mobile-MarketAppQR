@@ -1,5 +1,5 @@
 export namespace ICart {
-  export interface ICart {
+  export interface ICartDetail {
     userId: string;
     marketId: string;
     status: string;
@@ -9,7 +9,7 @@ export namespace ICart {
   }
 
   interface IData {
-    cart: ICart;
+    cart: ICartDetail;
   }
 
   export interface ICartCreateResponse {
@@ -24,5 +24,25 @@ export namespace ICart {
     _id: string;
     productName: string;
     price: number;
+  }
+
+  export interface ICartBuyOrDrop {
+    status: string;
+    message: string;
+  }
+
+  export interface Product {
+    marketstockid: string;
+    quantity: number;
+    _id: string;
+  }
+
+  interface IDataHistory {
+    carts: ICartDetail[];
+  }
+
+  export interface IHistoryResponse {
+    status: string;
+    data: IDataHistory;
   }
 }

@@ -16,7 +16,7 @@ export default function BottomWithCartTab() {
         headerShown: false,
         headerTransparent: true,
         tabBarShowLabel: false,
-        tabBarIcon: ({ focused, color, size }) => {
+        tabBarIcon: ({ focused }) => {
           let iconName: IconName;
 
           if (route.name === "Home") {
@@ -30,7 +30,7 @@ export default function BottomWithCartTab() {
           return (
             <MaterialCommunityIcons
               name={iconName}
-              size={size}
+              size={32}
               color={theme.colors.cyan[600]}
             />
           );

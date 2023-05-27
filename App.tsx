@@ -9,7 +9,8 @@ import {
 } from "native-base";
 import Main from "./Main";
 import { Provider } from "react-redux";
-import store from "./store/Store";
+import { store, persistor } from "./store/Store";
+import { PersistGate } from "redux-persist/integration/react";
 
 export default function App() {
   const config = {
@@ -21,9 +22,11 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <NativeBaseProvider theme={theme}>
-        <Main />
-      </NativeBaseProvider>
+      <PersistGate loading={null} persistor={persistor}>
+        <NativeBaseProvider theme={theme}>
+          <Main />
+        </NativeBaseProvider>
+      </PersistGate>
     </Provider>
   );
 }
