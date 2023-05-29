@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/Store";
-import { Box, Pressable, useColorModeValue } from "native-base";
+import { Box, Pressable, theme, useColorModeValue } from "native-base";
 import { TabView } from "react-native-tab-view";
 import { Animated, Dimensions, StatusBar } from "react-native";
 import UserDetailsScreen from "../../components/Account/AccountDetail.component";
 import ChangePasswordScreen from "../../components/Account/ChangePassword.component";
+import ShoppingHistoryScreen from "../../components/Account/ShoppingHistory.component";
 
 type Route = {
   key: string;
@@ -37,7 +38,7 @@ export default function AccountScreen({ navigation }: any) {
       case "changePassword":
         return <ChangePasswordScreen navigation={navigation} />;
       case "history":
-        return <ChangePasswordScreen navigation={navigation} />;
+        return <ShoppingHistoryScreen navigation={navigation} />;
       default:
         return null;
     }
@@ -57,13 +58,8 @@ export default function AccountScreen({ navigation }: any) {
             ),
           });
           const color =
-            index === i
-              ? useColorModeValue("#000", "#e5e5e5")
-              : useColorModeValue("#1f2937", "#a1a1aa");
-          const borderColor =
-            index === i
-              ? "cyan.600"
-              : useColorModeValue("coolGray.200", "gray.400");
+            index === i ? theme.colors.cyan[600] : theme.colors.blueGray[500];
+          const borderColor = index === i ? "cyan.600" : "coolGray.200";
           return (
             <Box
               borderBottomWidth="5"

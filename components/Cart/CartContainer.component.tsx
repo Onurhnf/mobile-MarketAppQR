@@ -30,6 +30,10 @@ export default function CartContainer({ totalCost }: any) {
       component: <CartItemSkeleton />,
       key: "0",
     },
+    {
+      component: <CartItemSkeleton />,
+      key: "1",
+    },
   ];
   const [listData, setListData] = useState<ICart.IProductInCart[]>([]);
 

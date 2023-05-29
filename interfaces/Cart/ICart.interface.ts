@@ -6,6 +6,9 @@ export namespace ICart {
     _id: string;
     products: IProductInCart[];
     __v: number;
+    totalCost?: number;
+    marketName?: string;
+    component?: any;
   }
 
   interface IData {
@@ -37,7 +40,7 @@ export namespace ICart {
     _id: string;
   }
 
-  interface IDataHistory {
+  export interface IDataHistory {
     carts: ICartDetail[];
   }
 
