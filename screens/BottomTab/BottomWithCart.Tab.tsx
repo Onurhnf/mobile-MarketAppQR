@@ -5,6 +5,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useTheme } from "native-base";
 import CartHome from "../Home/CartHome.screen";
 import AccountStack from "../Stacks/AccountStack";
+import CartStack from "../Stacks/CartStack";
 
 const Tab = createBottomTabNavigator();
 
@@ -38,7 +39,7 @@ export default function BottomWithCartTab() {
         },
       })}
     >
-      <Tab.Screen name="Home" component={CartHome} />
+      <Tab.Screen name="Cart Stack" component={CartStack} />
 
       <Tab.Screen name="Account Stack" component={AccountStack} />
     </Tab.Navigator>

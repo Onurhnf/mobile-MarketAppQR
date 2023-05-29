@@ -21,7 +21,6 @@ import { emptyCart } from "../../store/Cartslice";
 import { forgetMarket } from "../../store/MarketSlice";
 import { IError } from "../../interfaces/Error/IError.interface";
 import PurchaseCartModal from "../../components/Modal/PurchaseCartModal.component";
-import { ICart } from "../../interfaces/Cart/ICart.interface";
 
 export default function CartHome({ navigation }: any) {
   const dispatch = useDispatch<AppDispatch>();
@@ -35,9 +34,7 @@ export default function CartHome({ navigation }: any) {
   const theme = useTheme();
   const toast = useToast();
   const { token } = useSelector((state: RootState) => state.user);
-  const { barkod, cartData, cartId } = useSelector(
-    (state: RootState) => state.cart
-  );
+  const { cartData, cartId } = useSelector((state: RootState) => state.cart);
 
   useEffect(() => {
     if (removeCart) {
@@ -59,8 +56,10 @@ export default function CartHome({ navigation }: any) {
 
   useEffect(() => {
     if (purchaseCart) {
-      handlePurchase();
-      setPurchaseCart(false);
+      navigation.navigate("Purchase", {
+        totalCost,
+        setPurchaseCart,
+      });
     }
   }, [purchaseCart]);
 
@@ -75,38 +74,6 @@ export default function CartHome({ navigation }: any) {
 
       toast.show({
         description: "We appreciate your interest.",
-        backgroundColor: "success.500",
-        borderRadius: "2xl",
-        placement: "top",
-      });
-    } catch (error: any) {
-      if (error?.response && error?.response?.data) {
-        const errorResponse: IError.IErrorResponse = error.response.data;
-
-        toast.show({
-          description: errorResponse.message,
-          backgroundColor: "error.400",
-          borderRadius: "2xl",
-          placement: "top",
-        });
-      } else {
-        console.log("An error occurred:", error);
-      }
-    }
-  }
-
-  async function handlePurchase() {
-    try {
-      await CartService.PurchaseCart(cartId ?? "", token ?? "");
-      setAnimationVisible(true);
-      setTimeout(() => {
-        dispatch(forgetMarket());
-        dispatch(emptyCart());
-      }, 2000);
-
-      toast.show({
-        description:
-          "Thanks for being a part of the seamless shopping experience!",
         backgroundColor: "success.500",
         borderRadius: "2xl",
         placement: "top",
@@ -161,7 +128,7 @@ export default function CartHome({ navigation }: any) {
           </Heading>
         </View>
         <VStack position="relative" alignItems="center" space="2xl">
-          <CartContainer totalCost={totalCost} />
+          <CartContainer totalCost={totalCost} setTotalCost={setTotalCost} />
           <HStack
             width="100%"
             position="absolute"
@@ -187,6 +154,7 @@ export default function CartHome({ navigation }: any) {
             <Button
               borderRadius={50}
               borderWidth={2}
+              disabled={totalCost ?? 0 > 0 ? false : true}
               onPress={() => setIsPurchaseModalOpen(true)}
               variant="subtle"
               _text={{ color: theme.colors.dark[200], fontWeight: "bold" }}

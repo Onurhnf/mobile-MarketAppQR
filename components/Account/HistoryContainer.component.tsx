@@ -1,25 +1,18 @@
 import {
-  Avatar,
   Box,
   Center,
   HStack,
-  Heading,
   Text,
   Pressable,
   Spacer,
   VStack,
   theme,
-  useToast,
   Badge,
   Button,
 } from "native-base";
 import React, { useEffect, useState } from "react";
 import { SwipeListView } from "react-native-swipe-list-view";
 import { ICart } from "../../interfaces/Cart/ICart.interface";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store/Store";
-import CartService from "../../services/Cart.service";
-import { IError } from "../../interfaces/Error/IError.interface";
 import CartItemSkeleton from "../Cart/CartItemSkeleton.component";
 
 export default function HistoryContainer({
@@ -112,6 +105,7 @@ export default function HistoryContainer({
                     navigation.navigate("History", {
                       totalCost: item.totalCost,
                       products: item.products,
+                      marketName: item.marketName,
                     })
                   }
                   borderWidth="1"

@@ -27,6 +27,7 @@ export namespace ICart {
     _id: string;
     productName: string;
     price: number;
+    productImage?: string;
   }
 
   export interface ICartBuyOrDrop {

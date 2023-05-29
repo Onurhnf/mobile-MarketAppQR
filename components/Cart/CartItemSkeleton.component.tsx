@@ -1,13 +1,11 @@
 import { Box, HStack, Pressable, VStack, Skeleton } from "native-base";
-import React from "react";
+import React, { LegacyRef, RefObject } from "react";
 import { View } from "react-native";
 
-export default function CartItemSkeleton() {
-  const pressableRef = React.useRef(null);
-
+const CartItemSkeleton = React.forwardRef((props, ref: LegacyRef<View>) => {
   return (
     <Box>
-      <View ref={pressableRef}>
+      <View ref={ref}>
         <Pressable
           _dark={{
             bg: "coolGray.800",
@@ -35,4 +33,6 @@ export default function CartItemSkeleton() {
       </View>
     </Box>
   );
-}
+});
+
+export default CartItemSkeleton;
