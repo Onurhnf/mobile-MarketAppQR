@@ -30,8 +30,6 @@ const SignUpScreen: React.FC = () => {
   });
 
   const handleSignUp = async () => {
-    // Add your login logic here
-
     try {
       const result = await AuthService.SignUp(credentials);
 
