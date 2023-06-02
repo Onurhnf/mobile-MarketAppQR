@@ -4,6 +4,7 @@ import AccountScreen from "../Account/Account.screen";
 import HomeScreen from "../Home/Home.screen";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useTheme } from "native-base";
+import AccountStack from "../Stacks/AccountStack";
 
 const Tab = createBottomTabNavigator();
 
@@ -21,7 +22,7 @@ export default function BottomTab() {
 
           if (route.name === "Home") {
             iconName = focused ? "home" : "home-outline";
-          } else if (route.name === "Account") {
+          } else if (route.name === "Account Stack") {
             iconName = focused ? "account" : "account-outline";
           } else {
             iconName = focused ? "home" : "home-outline";
@@ -39,7 +40,7 @@ export default function BottomTab() {
     >
       <Tab.Screen name="Home" component={HomeScreen} />
 
-      <Tab.Screen name="Account" component={AccountScreen} />
+      <Tab.Screen name="Account Stack" component={AccountStack} />
     </Tab.Navigator>
   );
 }

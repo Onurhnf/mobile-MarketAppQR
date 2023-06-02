@@ -11,6 +11,7 @@ import {
   Text,
   VStack,
   useToast,
+  Image,
 } from "native-base";
 import AuthService from "../../services/Auth.service";
 import { IError } from "../../interfaces/Error/IError.interface";
@@ -20,6 +21,7 @@ import { login, setUserData } from "../../store/UserSlice";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const LoginScreen: React.FC = ({ navigation }: any) => {
+  const imagePath = require("../../assets/logoo1.png");
   const toast = useToast();
   const dispatch = useDispatch();
   const [credentials, setCredentials] = useState<IAuth.ILogin>({
@@ -61,11 +63,26 @@ const LoginScreen: React.FC = ({ navigation }: any) => {
       _dark={{ bg: "blueGray.800" }}
       _light={{ bg: "blueGray.100" }}
     >
-      <Box p="2" py="8" w="90%" maxW="290">
+      <Box
+        position="relative"
+        w={"full"}
+        marginBottom={10}
+        alignItems={"center"}
+      >
+        <Image
+          position="absolute"
+          source={imagePath}
+          style={{ width: 115, height: 115, resizeMode: "contain" }}
+          alt="Your Image"
+        />
+      </Box>
+
+      <Box p="2" py="8" mt="10" w="90%" maxW="290">
         <Heading
-          size="lg"
+          size="xl"
           fontWeight="600"
-          color="coolGray.800"
+          color="cyan.600"
+          bold
           _dark={{
             color: "warmGray.50",
           }}

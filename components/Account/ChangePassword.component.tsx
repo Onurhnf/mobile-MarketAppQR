@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { Center, VStack, Box, Input, Button, useToast } from "native-base";
+import {
+  Center,
+  VStack,
+  Box,
+  Input,
+  Button,
+  useToast,
+  theme,
+} from "native-base";
 import { IAuth } from "../../interfaces/Auth/IAuth.interface";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -7,6 +15,7 @@ import { RootState, persistor } from "../../store/Store";
 import AuthService from "../../services/Auth.service";
 import { IError } from "../../interfaces/Error/IError.interface";
 import { logout } from "../../store/UserSlice";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 const ChangePasswordScreen = ({ navigation }: any) => {
   const { token } = useSelector((state: RootState) => state.user);
@@ -61,6 +70,7 @@ const ChangePasswordScreen = ({ navigation }: any) => {
 
   return (
     <Center position="relative" flex={1} my={4}>
+      <FontAwesome5 name="user-lock" size={54} color={theme.colors.cyan[600]} />
       <Box p={4} width="90%" maxWidth={400}>
         <VStack space={4}>
           <Input

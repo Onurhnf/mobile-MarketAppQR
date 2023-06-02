@@ -4,6 +4,8 @@ import AccountScreen from "../Account/Account.screen";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useTheme } from "native-base";
 import CartHome from "../Home/CartHome.screen";
+import AccountStack from "../Stacks/AccountStack";
+import CartStack from "../Stacks/CartStack";
 
 const Tab = createBottomTabNavigator();
 
@@ -21,7 +23,7 @@ export default function BottomWithCartTab() {
 
           if (route.name === "Home") {
             iconName = focused ? "home" : "home-outline";
-          } else if (route.name === "Account") {
+          } else if (route.name === "Account Stack") {
             iconName = focused ? "account" : "account-outline";
           } else {
             iconName = focused ? "home" : "home-outline";
@@ -37,9 +39,9 @@ export default function BottomWithCartTab() {
         },
       })}
     >
-      <Tab.Screen name="Home" component={CartHome} />
+      <Tab.Screen name="Cart Stack" component={CartStack} />
 
-      <Tab.Screen name="Account" component={AccountScreen} />
+      <Tab.Screen name="Account Stack" component={AccountStack} />
     </Tab.Navigator>
   );
 }

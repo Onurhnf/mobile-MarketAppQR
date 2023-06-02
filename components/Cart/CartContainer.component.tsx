@@ -6,7 +6,6 @@ import {
   Heading,
   Text,
   Pressable,
-  Spacer,
   VStack,
   theme,
   useToast,
@@ -20,7 +19,7 @@ import { RootState } from "../../store/Store";
 import CartService from "../../services/Cart.service";
 import { IError } from "../../interfaces/Error/IError.interface";
 
-export default function CartContainer({ totalCost }: any) {
+export default function CartContainer({ totalCost, setTotalCost }: any) {
   const toast = useToast();
   const { cartData, cartId } = useSelector((state: RootState) => state.cart);
   const { token } = useSelector((state: RootState) => state.user);
@@ -30,12 +29,20 @@ export default function CartContainer({ totalCost }: any) {
       component: <CartItemSkeleton />,
       key: "0",
     },
+    {
+      component: <CartItemSkeleton />,
+      key: "1",
+    },
   ];
   const [listData, setListData] = useState<ICart.IProductInCart[]>([]);
 
   useEffect(() => {
     if (cartData) {
-      setListData(cartData);
+      const formattedData = cartData.map((item, index) => ({
+        ...item,
+        key: index.toString(),
+      }));
+      setListData(formattedData);
     }
   }, [cartData]);
 
@@ -44,6 +51,17 @@ export default function CartContainer({ totalCost }: any) {
       rowMap[rowKey].closeRow();
     }
   };
+
+  useEffect(() => {
+    if (listData) {
+      let total = 0;
+
+      listData.forEach((product) => {
+        total += product.price * product.quantity;
+      });
+      setTotalCost(total);
+    }
+  }, [listData]);
 
   async function handleDeleteOneFromCart(itemid: string) {
     try {
@@ -103,19 +121,25 @@ export default function CartContainer({ totalCost }: any) {
             bg: "white",
           }}
         >
-          <Box pl="4" pr="5" py="2">
-            <HStack alignItems="center" space={3}>
-              <Avatar size="48px" />
-              <VStack>
+          <Box pl="4" pr="5" py="2" flex={1}>
+            <HStack alignItems="center">
+              <Avatar
+                size="52px"
+                backgroundColor="white"
+                source={{ uri: item.productImage }}
+              />
+              <VStack flex={1}>
                 <Text
                   color="coolGray.800"
                   _dark={{
                     color: "warmGray.50",
                   }}
                   bold
+                  pb="2"
                 >
                   {item.productName}
                 </Text>
+
                 <Text
                   color="coolGray.600"
                   _dark={{
@@ -125,11 +149,12 @@ export default function CartContainer({ totalCost }: any) {
                   Qty: {item.quantity}
                 </Text>
               </VStack>
-              <Spacer />
-              <VStack flex={1} space="1">
+
+              <VStack>
                 {item.quantity <= 1 && (
                   <Text
                     fontSize="sm"
+                    width="100%"
                     color="coolGray.800"
                     _dark={{
                       color: "warmGray.50",
