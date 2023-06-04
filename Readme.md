@@ -1,6 +1,6 @@
-# Tara Mobile Frontend
+# Tara Frontend(Mobile)
 
-Tara Mobile Frontend is the front-end part of the Tara App, a QR and barcode scanning based shopping application. This app allows users to scan QR codes, scan product barcodes, and manage their virtual carts. Please refer to the [Tara Backend](https://github.com/Onurhnf/tara-backend-nodejs-expressjs) repository for the back-end implementation.
+This project is the frontend part of the Tara App, a QR and barcode scanning based shopping application. This app allows users to scan QR codes, scan product barcodes, and manage their virtual carts. Please refer to the [Tara Backend](https://github.com/Onurhnf/tara-backend-nodejs-expressjs) repository for the back-end implementation.
 
 ## Features
 
